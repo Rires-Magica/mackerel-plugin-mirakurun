@@ -17,7 +17,7 @@ func (pl MirakurunPlugin) MetricKeyPrefix() string {
 	return pl.Prefix
 }
 
-func (pl MirakurunPlugin) FetchMetrics() (map[string]int, error) {
+func (pl MirakurunPlugin) FetchMetrics() (map[string]float64, error) {
 	url := fmt.Sprintf("http://localhost:%d/api/tuners", pl.Port)
 	resp, err := resty.R().Get(url)
 	if err != nil {
@@ -50,11 +50,11 @@ func (pl MirakurunPlugin) FetchMetrics() (map[string]int, error) {
 		}
 	}
 	// fucking shit poop code end
-	return map[string]int{
-		"available": available,
-		"free": free,
-		"using": using,
-		"fault": fault
+	return map[string]float64{
+		"available": float64(available),
+		"free": float64(free),
+		"using": float64(using),
+		"fault": float64(fault),
 	}, nil
 }
 
@@ -67,19 +67,19 @@ func (pl MirakurunPlugin) GraphDefinition() map[string]mp.Graphs {
 				{Name: "available", Label: "Available"},
 				{Name: "free", Label: "Free", Stacked: true},
 				{Name: "using", Label: "Using", Stacked: true},
-				{Name: "fault", Label: "Fault", Stacked: true}
-			}
-		}
+				{Name: "fault", Label: "Fault", Stacked: true},
+			},
+		},
 	}
 }
 
 func Do() {
-	optPort = flag.Int("mirakurun-port", 40772, "Mirakurun API Port (http)")
-	optPrefix = flag.String("metric-key-prefix", "mirakurun", "Metric Key Prefix")
+	optPort := flag.Int("mirakurun-port", 40772, "Mirakurun API Port (http)")
+	optPrefix := flag.String("metric-key-prefix", "mirakurun", "Metric Key Prefix")
 	flag.Parse()
 	mirakurunpl := MirakurunPlugin{
-		Prefix: *optPrefix
-		Port: *optPort
+		Prefix: *optPrefix,
+		Port: *optPort,
 	}
 	plugin := mp.NewMackerelPlugin(mirakurunpl)
 	plugin.Run()
