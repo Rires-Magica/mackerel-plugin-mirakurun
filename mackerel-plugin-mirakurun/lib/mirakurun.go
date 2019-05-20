@@ -81,6 +81,6 @@ func Do() {
 		Prefix: *optPrefix
 		Port: *optPort
 	}
-	plugin := mp.NewMackerelPlugin(mirakurunpl)[]
+	plugin := mp.NewMackerelPlugin(mirakurunpl)
 	plugin.Run()
 }
