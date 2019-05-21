@@ -3,9 +3,9 @@ package mpmirakurun
 import (
 	"flag"
 	"fmt"
-	"gopkg.in/resty.v1"
 	"github.com/bitly/go-simplejson"
 	mp "github.com/mackerelio/go-mackerel-plugin"
+	"gopkg.in/resty.v1"
 )
 
 type MirakurunPlugin struct {
