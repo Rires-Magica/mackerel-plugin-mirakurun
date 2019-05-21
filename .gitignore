@@ -17,3 +17,6 @@ out
 *.iws
 *.iml
 .idea
+
+# Distributions
+dist
